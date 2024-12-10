@@ -1,0 +1,59 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int main() {
+    // Abrir el archivo y leer el contenido
+    ifstream file("XMAS");
+    if (!file.is_open()) {
+        cerr << "No se pudo abrir el archivo!" << endl;
+        return 1;
+    }
+
+    vector<string> lines;
+    string line;
+    
+    // Leer todas las líneas del archivo
+    while (getline(file, line)) {
+        lines.push_back(line);
+    }
+    file.close();
+
+    int total = 0;
+    int numRows = lines.size();
+    int numCols = lines[0].size();
+
+    // Recorrer la matriz de caracteres
+    for (int i = 1; i < numRows - 1; ++i) {
+        for (int j = 1; j < numCols - 1; ++j) {
+            if (lines[i][j] == 'A') {
+                // Verificar las posiciones alrededor de 'A' para cada patrón
+                if (lines[i + 1][j + 1] == 'S' && lines[i + 1][j - 1] == 'M' &&
+                    lines[i - 1][j - 1] == 'M' && lines[i - 1][j + 1] == 'S') {
+                    total++;
+                }
+
+                if (lines[i + 1][j + 1] == 'S' && lines[i + 1][j - 1] == 'S' &&
+                    lines[i - 1][j - 1] == 'M' && lines[i - 1][j + 1] == 'M') {
+                    total++;
+                }
+
+                if (lines[i + 1][j + 1] == 'M' && lines[i + 1][j - 1] == 'S' &&
+                    lines[i - 1][j - 1] == 'S' && lines[i - 1][j + 1] == 'M') {
+                    total++;
+                }
+
+                if (lines[i + 1][j + 1] == 'M' && lines[i + 1][j - 1] == 'M' &&
+                    lines[i - 1][j - 1] == 'S' && lines[i - 1][j + 1] == 'S') {
+                    total++;
+                }
+            }
+        }
+    }
+
+    cout << total << endl;
+
+    return 0;
+}
