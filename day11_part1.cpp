@@ -83,7 +83,7 @@ void delete_tree(TreeNode* node) {
 }
 
 int main() {
-    std::ifstream file("input.txt"); // Abrimos el archivo de entrada
+    std::ifstream file("dia_11_input"); // Abrimos el archivo de entrada
     if (!file) {
         std::cerr << "Error al abrir el archivo input.txt\n";
         return 
