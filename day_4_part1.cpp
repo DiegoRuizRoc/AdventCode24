@@ -67,7 +67,7 @@ int count_xmas_occurrences(const vector<string>& grid) {
 }
 
 int main() {
-    ifstream file("input4.txt");
+    ifstream file("dia_4_input");
     if (!file) {
         cerr << "Error al abrir el archivo input2.txt\n";
         return 1;
