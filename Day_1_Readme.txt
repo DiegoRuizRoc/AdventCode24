@@ -12,5 +12,5 @@ El uso de divide y vencerás nos permite dividir el problema de ordenación en s
 
 Cosas aprendidas:
 
-En este codigo hemos implementado una tecnica de ordenación Merge Sort, esto nos ha ayudado a entender mejor su funcionamiento, porque una vez te pones a redactar el codigo te van surgiendo ciertos problemas y gracias a ellos aprendes.
+Gracias a la implementación de la tecnica Merge Sort hemos entendido mejor su funcionamiento y su proceso de ordenación. Hemos aprendido a implementarlo para resolver el problema
 
