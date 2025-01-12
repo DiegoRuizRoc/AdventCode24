@@ -45,7 +45,7 @@ const std::vector<Punto> movimientos = {
     Punto(0, -1)   // Movimiento hacia la izquierda
 };
 
-// Función recursiva para realizar una búsqueda en profundidad (DFS) desde un punto
+// Función recursiva para realizar una búsqueda en profundidad desde un punto
 void buscar(const Punto& p, const std::vector<std::string>& mapa, std::unordered_set<Punto, Hasher>& visitados) {
     const auto valor = mapa[p.fila][p.columna];  // Valor del punto actual
     for (const auto& movimiento : movimientos) {
