@@ -50,7 +50,7 @@ vector<string> encontrarCliqueDesdeNodo(const string& nodoInicial, const unorder
 }
 
 int main() {
-    string nombreArchivo = "input23a.txt";
+    string nombreArchivo = "dia_23_input";
 
     // Leer el grafo desde el archivo
     auto grafo = leerGrafo(nombreArchivo);
