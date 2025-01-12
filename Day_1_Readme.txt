@@ -1,6 +1,7 @@
 Día 1: Divide y Vencerás
 
-Hemos decidido abordar este problema utilizando el método de divide y vencerás, ya que es una técnica eficiente para manejar problemas de ordenación y división de problemas más grandes en partes más pequeñas. En este caso, hemos utilizado la tecnica Merge Sort.
+Hemos decidido abordar este problema utilizando el método de divide y vencerás, ya que es una técnica eficiente para manejar problemas de ordenación y división de problemas más grandes en partes más pequeñas.
+En este caso, hemos utilizado la tecnica Merge Sort.
 
 La idea principal es dividir el conjunto de datos en dos mitades de manera recursiva hasta que cada subgrupo contenga un solo elemento (o ninguno). Luego, fusionamos esos subgrupos de manera ordenada. Esto lo hace la función mergesort, que recursivamente divide el vector hasta llegar a las sublistas más pequeñas y las combina de manera ordenada mediante la función merge.
 
