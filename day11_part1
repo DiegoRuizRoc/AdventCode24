@@ -1,85 +1,106 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 #include <fstream>
-#include <sstream>
-#include <string>
 #include <cmath>
+#include <queue>
 #include <unordered_map>
-#include <set>
-#include <algorithm>
-#include <limits>
-#include <cstdint>
-void print(std::unordered_map<uint64_t,uint64_t>& stones){
-    std::cout<<"\n";
-    for(const auto& [key,value] : stones){
-        std::cout<<"  "<<key<<" : "<<value;
-    }
-    std::cout<<"\n";
+#include <sstream>
+
+constexpr int n_level = 25; // Número máximo de parpadeos
+
+struct TreeNode {
+    long long engraving; //Numero grabado en la piedra
+    TreeNode* left; //Apunta al hijo izquierdo
+    TreeNode* right; //Apunta al hijo derecho
+
+    TreeNode(long long engraving) : engraving(engraving), left(nullptr), right(nullptr) {}
+};
+
+// Función para calcular el número de dígitos de un número
+int count_digits(long long number) {
+    return number == 0 ? 1 : static_cast<int>(std::log10(number)) + 1;
 }
-bool even_number(uint64_t number, uint64_t& part1_number, uint64_t& part2_number) {
-    // Determina la cantidad de dígitos en el número
-    uint64_t factor = 1;
-    size_t i;
-    for (i = 0; factor <= number; i++) {
-        factor *= 10;
-    }
 
-    // Si la cantidad de dígitos es impar, retorna falso
-    if (i % 2 != 0) {
-        return false;
-    }
+// Construir un árbol desde un nodo raíz
+void build_tree(TreeNode* node, int level, int max_level) {
+    if (level >= max_level) return;
 
-    // Divide el número en dos partes (superior e inferior)
-    uint64_t split = pow(10, (i / 2));
-    part1_number = number / split;  // Parte superior
-    part2_number = number % split;  // Parte inferior
-    return true;
+    int n_digits = count_digits(node->engraving);
+
+    if (node->engraving == 0) {
+        node->left = new TreeNode(1);
+        build_tree(node->left, level + 1, max_level);
+    } else if (n_digits % 2 == 0) {
+        long long power = static_cast<long long>(std::pow(10, n_digits / 2));
+        long long left_value = node->engraving / power;
+        long long right_value = node->engraving % power;
+
+        node->left = new TreeNode(left_value);
+        node->right = new TreeNode(right_value);
+
+        build_tree(node->left, level + 1, max_level);
+        build_tree(node->right, level + 1, max_level);
+    } else {
+        node->left = new TreeNode(node->engraving * 2024);
+        build_tree(node->left, level + 1, max_level);
+    }
+}
+
+// Contar las piedras en el árbol después de n_level parpadeos
+long long count_stones(TreeNode* node, int level) {
+    if (level == n_level) return 1;
+
+    long long total = 0;
+    if (node->left) total += count_stones(node->left, level + 1);
+    if (node->right) total += count_stones(node->right, level + 1);
+
+    return total;
+}
+
+// Liberar la memoria del árbol
+void delete_tree(TreeNode* node) {
+    if (!node) return;
+
+    delete_tree(node->left);
+    delete_tree(node->right);
+    delete node;
 }
 
 int main() {
-    std::ifstream file("day11");
+    std::ifstream file("input.txt");
     if (!file) {
-        std::cerr << "Error opening the file!" << std::endl;
+        std::cerr << "Error al abrir el archivo input.txt\n";
         return 1;
     }
-    std::string line;
-    std::unordered_map<uint64_t, uint64_t> stones; // first = stone number / second = count of stones with that number
-    uint64_t number;
 
-    // Leer el archivo y poblar el mapa stones
+    std::vector<long long> stones;
+    std::string line;
     while (std::getline(file, line)) {
         std::istringstream iss(line);
-        while (iss >> number) {
-            stones[number] = 1;  // Suponemos que hay una piedra por cada número en la entrada
-        }
-    }
+        std::string token;
 
-    uint64_t MAX_SIZE = stones.max_size();
-    uint64_t part_number1, part_number2;
-
-    for (int i = 0; i < 25; i++) {
-        std::cout << "Iteration: " << i << "\n";
-        print(stones);
-        std::unordered_map<uint64_t,uint64_t> temporal;
-        for (const auto& [key, value] : stones) {
-            if (key == 0) {
-                temporal[1] += value; 
-            } else if (even_number(key, part_number1, part_number2)) {
-                temporal[part_number1] += value;  
-                temporal[part_number2] += value;  
-            } else {
-                temporal[key * 2024] += value;
+        while (iss >> token) {
+            try {
+                stones.push_back(std::stoll(token));
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Advertencia: Entrada inválida encontrada, ignorando: " << token << '\n';
+            } catch (const std::out_of_range& e) {
+                std::cerr << "Advertencia: Número fuera de rango encontrado, ignorando: " << token << '\n';
             }
         }
-        stones = temporal;
     }
 
-    // Calcular el resultado sumando todos los valores de las piedras
-    uint64_t result = 0;
-    for (const auto& pair : stones) {
-        result += pair.second;
+    long long total_stones = 0;
+
+    // Procesar cada piedra de entrada
+    for (long long stone : stones) {
+        TreeNode* root = new TreeNode(stone);
+        build_tree(root, 0, n_level);
+        total_stones += count_stones(root, 0);
+        delete_tree(root); // Limpiar la memoria del árbol
     }
 
-    std::cout << "Result: " << result << "\n";
+    std::cout << "Total de piedras después de " << n_level << " parpadeos: " << total_stones << '\n';
+
     return 0;
 }
