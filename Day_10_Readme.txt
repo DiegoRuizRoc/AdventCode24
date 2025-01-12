@@ -7,3 +7,7 @@ La búsqueda se realiza de manera recursiva en 4 direcciones (arriba, abajo, izq
 Este método es más eficiente que uno de programación dinámica ya que nos permite despreocuparnos del espacio de la tabla para almacenar los puntos ya visitados. En lugar de usar una matriz de booleanos o una estructura similar para marcar puntos visitados.
 
 En este caso, utilizamos la posición fila y columna como llaves para la tabla hash, de este modo nos aseguramos de que ese punto solo se inserte una vez. En la tabla hash insertamos el elemento Point, que es un dato que contiene los enteros correspondientes a fila y columna. Si el punto ya está en la tabla, la función de búsqueda devolverá el punto almacenado, lo que indica que ya hemos visitado ese punto.
+
+Cosas aprendidas:
+Implementar   #include <unordered_set>
+              #include <unordered_map>
