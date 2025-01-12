@@ -1,4 +1,4 @@
-PARTE 2: #include <iostream>
+#include <iostream>
 #include <fstream>
 #include <unordered_map>
 #include <unordered_set>
