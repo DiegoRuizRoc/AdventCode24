@@ -29,7 +29,7 @@ bool esTriangulo(const unordered_map<string, unordered_set<string>>& grafo, cons
 
 // Función principal
 int main() {
-    string nombreArchivo = "input23a.txt";
+    string nombreArchivo = "dia_23_input";
 
     // Leer el grafo desde el archivo
     auto grafo = leerGrafo(nombreArchivo);
