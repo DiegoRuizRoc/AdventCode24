@@ -86,4 +86,40 @@ int main() {
     std::ifstream file("dia_11_input"); // Abrimos el archivo de entrada
     if (!file) {
         std::cerr << "Error al abrir el archivo input.txt\n";
-        return 
+        return 1;
+    }
+
+    std::vector<long long> stones;
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string token;
+
+        while (iss >> token) {
+            try {
+                stones.push_back(std::stoll(token));
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Advertencia: Entrada inválida encontrada, ignorando: " << token << '\n';
+            } catch (const std::out_of_range& e) {
+                std::cerr << "Advertencia: Número fuera de rango encontrado, ignorando: " << token << '\n';
+            }
+        }
+    }
+
+    long long total_stones = 0;
+
+    for (long long stone : stones) {
+        TreeNode* root = new TreeNode(stone);
+
+        // Memoria para resultados calculados
+        std::unordered_map<std::pair<long long, int>, long long, PairHash> memo;
+
+        total_stones += count_stones(root, 0, n_level, memo);
+
+        delete_tree(root); // Limpiar la memoria del árbol
+    }
+
+    std::cout << "Total de piedras después de " << n_level << " parpadeos: " << total_stones << '\n';
+
+    return 0;
+}
