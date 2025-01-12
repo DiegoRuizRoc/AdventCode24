@@ -10,3 +10,7 @@ Una vez que la lista de left_side se ordena, utilizamos un mapa hash (unordered_
 
 El uso de divide y vencerás nos permite dividir el problema de ordenación en subproblemas más simples, lo que hace resolver el problema más ameno. La ordenación y el uso del mapa hash juntos permiten resolver el problema.
 
+Cosas aprendidas:
+
+En este codigo hemos implementado una tecnica de ordenación Merge Sort, esto nos ha ayudado a entender mejor su funcionamiento, porque una vez te pones a redactar el codigo te van surgiendo ciertos problemas y gracias a ellos aprendes.
+
